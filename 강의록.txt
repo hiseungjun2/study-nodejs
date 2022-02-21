@@ -1,0 +1,173 @@
+
+1. Node.js 의 특징과 강점, 약점
+    저수준의 오래 걸리는 일은 Node에게
+    고수준의 로직은 메인 스레드에서
+    -> 오프로딩 offloading
+
+    저수준 처리의 개선
+        node.js 에서는 C와 WebAssembly 모듈 바인딩해서 사용하는 방법 제공
+
+    방대한 오픈소스 생태계
+        npm : node package management
+
+2.
+    Glitch 에서 노드 서버띄우기 위한 기본 코딩 및 테스트 가능
+    node 버전관리 -> tj/n
+
+3. 
+    airbnb javascript style guide - eslint 기반 
+
+4. package 설치
+    npm install --save-dev XXXXX
+        prettier
+        eslint
+        eslint-config-airbnb-base
+        eslint-config-prettier
+        eslint-plugin-import
+        eslint-plugin-node
+        typescript
+        @types/node
+
+    httpie 설치하기
+    -> 파이썬 설치 후 진행
+        
+5. 자바스크립트 기초 이론 다지기
+    자바스크립트의 실행 모델은 event loop, call stack, callback queue 개념으로 이루어져 있음
+    event loop 
+        이벤트 루프 모델은 여러 스레드를 사용
+        그 중 우리가 작성한 자바스크립트 코드가 실행되는 스레드을 메인 스레드
+        한 node.js 프로세스에서 메인 스레드는 1개 이며, 한 순간에 한 줄씩만 실행한다
+        그 외의 일(file i/o, network) 을 하는 워커 스레드는 여러개 있을 수 있음
+
+    call stack
+        지금 시점까지 불린 함수들의 스택
+        함수가 호출될 때 쌓이고, 리턴할 때 빠진다
+        이벤트 루프가 다음 콜백을 처리하려면 지금 처리중인 콜백의 실행이 완전히 끝나야 됨
+            -> call stack 이 완전히 빌 때까지 처리한다.
+        --> run to completion
+
+    callback queue
+        메세지 큐, 앞으로 실행할 콜백(함수와 그 인자)들을 쌓아두는 큐
+        콜백은 브라우저나 node가 어떤 일이 발생하면(event) 메인 스레드에 이를 알려주기 위해 사용
+
+    non-blocking i/o
+    offloading
+        브라우저나 node.js 에서나, web api 혹은 node api 동작이 끝나면 callback queue에 등록
+        브라우저나 node가 요청 받은 일을 하고 있는 동안 메인 스레드와 이벤트 루프는 영향을 받지 않고 계속 실행된다.
+        이를 offloading 이라 함
+
+6. 자바스크립트 기초 이론 다지기 2
+    Hoisting 
+        변수의 선언만을 해당 스코프의 맨 위로 끌어올리는 것
+        var 선언 시 맨위에서 변수 선언한다. 이후 값을 초기화
+        function 도 대상임, 맨위에서 선언하고 값을 초기화하지는 않음
+
+    binding
+        코드의 어떤 식별자가 실제로 어떤 값이 가리키는지를 결정하는 것
+        자바스크립트에서의 binding 은 lexical scope 를 통해 이루어짐
+    
+    lexical scope
+        안쪽에서 바깥쪽 변수에 접근할 수 있다는 뜻
+
+    block scoping
+        var 는 block scoping 대상이 아니라서 같이 참조 가능
+        let, const 는 block scoping 대상임
+
+7. 자바스크립트 기초 이론 다지기 3
+    closure
+        function + environment
+        function이 하나 생길때마다 하나씩 생김
+        environment 는 함수 자신을 둘러싼 접근할 수 있는 모든 스코프
+        고차 함수 만드는데 유용
+
+8. 자바스크립트 기초 이론 다지기 4
+    Prototype
+
+9. 모던 자바스크립트 살펴보기 1
+    let
+        Hoisting 규칙이 없고 block scoping 을 지원
+        reference 바뀔 수 있음
+        같은 scope 내에서 두번 선언될 수 없음
+
+    const
+        Hoisting 규칙이 없고 block scoping 을 지원
+        reference 바뀔 수 없음 (상수)
+        같은 scope 내에서 두번 선언될 수 없음
+
+    가능하다면 const 만 쓰고 필요한 경우 let, var는 쓰지 말기
+
+10. 모던 자바스크립트 살펴보기 2
+    spread syntax
+        병합, 구조 분배 할당 등에 다양하게 활용할 수 있음
+        (...)
+
+11. promise
+
+12. polyfill
+    JS standard library 에는 구현되어 있으나, node 나 기타 등등에서는 버전 차이로 인해 구현이 안되어있을 경우
+    미리 구현체로 만들어 써볼 수 있는 기능
+
+13. Transpile
+    코드를 A 언어에서 B 언어로 변환하는 작업
+    구형 런타임에서 신규 문법적 요소를 활용하기 위해 사용
+    자바스크립트를 대상으로 하는 트랜스파일러는 Babel, tsc(TypeScript Compiler), ESBuild 
+
+14. npm
+    package.json
+        ^3.1.0 : npm update 시 minor 버전으로 업데이트 됨
+        ~3.1.0 : npm update 시 patch 버전으로 업데이트 됨
+    package-lock.json
+        실제로 설치된 패키지의 버전이 들어감
+    
+    npm install --production : 패키지 설치 시 dev 로 설치된 패키지는 제외하고 설치
+    npm install : dependencies 에 정의된 모든 패키지 설치
+
+15. yarn
+    npm 과 거의 비슷
+    npm install -g yarn
+    yarn add decamelize
+    yarn.lock 파일을 사용
+    yarn add --dev eslint
+    yarn add -D eslint
+    yarn run lint
+
+16. buffer
+    고정된 길이의 시퀀스를 가지고 있는 바이트
+    
+17. stream
+    stream 이 가능한 source 로 부터 handler 에게 해당 데이터를 여러개의 chunks 형태로 보내는 방식
+    큰 데이터를 처리해야 하거나 비동기적으로만 얻을 수 있는 데이터를 처리해야 할 때 유용.
+
+    Readable
+        스트림으로부터 읽을 수 있다.
+        fs.createReadStream
+        process.stdin
+        서버 입장의 HTTP 요청
+        클라이언트 입장의 HTTP 응답
+    
+    Writable
+        스트림에 출력할 수 있다.
+        fs.createWriteStream
+        process.stdout
+        클라이언트 입장의 HTTP 요청
+        서버 입장의 HTTP 응답
+
+    Duplex
+        이 스트림에 입력을 받을 수도 있고 출력을 보낼 수도 있다.
+        TCP sockets
+        zlib streams
+        crypto streams
+
+    Transform
+        입력받은 스트림을 변환해서 새로운 스트림으로 만든다
+        zlib streams
+        crypto streams
+
+18 Express
+    npm install express
+    npm install --save-dev @types/express
+
+    
+
+
+
