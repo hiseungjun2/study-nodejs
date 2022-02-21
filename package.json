@@ -1,0 +1,29 @@
+{
+  "engines": {
+    "node": "16.14.0"
+  },
+  "scripts": {
+    "debug": "node src/main.js",
+    "build": "esbuild src/transpile.js --bundle --outfile=build/transpile.js --target=node16.14.0",
+    "server": "nodemon src/main.js",
+    "lint": "eslint src/**/*"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.16",
+    "eslint": "^8.8.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-node": "^11.1.0",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "core-js": "^3.21.0",
+    "decamelize": "^3.1.0",
+    "esbuild": "^0.14.21",
+    "express": "^4.17.3"
+  }
+}
