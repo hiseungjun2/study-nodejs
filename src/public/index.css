@@ -13,3 +13,7 @@ color : green
 .big {
     font-size: 24px;
 }
+
+.profileImage {
+    width : 300px
+}

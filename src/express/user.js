@@ -3,15 +3,22 @@
 /* eslint-disable no-console */
 
 const express = require('express')
+const multer = require('multer') // 사진 업로드 라이브러리
+
+const upload = multer({
+  dest: 'uploads/',
+})
 
 const router = express.Router()
 
 const USERS = {
   15: {
     nickname: 'foo',
+    profileImageKey: undefined,
   },
   16: {
     nickname: 'bar',
+    profileImageKey: undefined,
   },
 }
 
@@ -37,7 +44,6 @@ router.param('id', async (req, res, next, value) => {
     next(err)
   }
 })
-
 // /user/15
 router.get('/:id', (req, res) => {
   // 반환 타입
@@ -50,6 +56,9 @@ router.get('/:id', (req, res) => {
     res.render('user-profile', {
       // @ts-ignore
       nickname: req.user.nickname,
+      userId: req.params.id,
+      // profileImageURL: '/uploads/3f3bd33d7dca35020c279d235e11493b',
+      profileImageURL: `/uploads/${req.user.profileImageKey}`,
     })
   }
 })
@@ -59,6 +68,7 @@ router.post('/', (req, res) => {
   res.send('User regustered')
 })
 
+// 닉네임 변경
 router.post('/:id/nickname', (req, res) => {
   // req.body: {"nickname": "bar"}
   // @ts-ignore
@@ -68,6 +78,15 @@ router.post('/:id/nickname', (req, res) => {
   user.nickname = nickname
 
   res.send(`User nickname updated: ${nickname}`)
+})
+
+// 프로필 이미지 저장
+router.post('/:id/profile', upload.single('profile'), (req, res, next) => {
+  const { user } = req
+  const { filename } = req.file
+  user.profileImageKey = filename
+
+  res.send(`User profile image uploaded: ${filename}`)
 })
 
 module.exports = router
