@@ -21,3 +21,7 @@
  ```
     brew install httpie
  ```
+
+### 3. MongoDB 사용하기
+ * https://www.mongodb.com/
+ * start free -> Atlas 이용하기 
