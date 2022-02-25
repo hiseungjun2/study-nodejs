@@ -1,0 +1,12 @@
+키워드로 검색해서 나온 이미지를 원하는 사이즈로 리사이징해서 돌려주는 서버
+
+unsplash
+    이미지 가져올 주소
+
+npm install unsplash-js node-fetch
+
+npm install sharp
+    이미지를 빠르게 처리할 수 있는 노드라이브러리
+
+npm install image-size
+    이미지 사이즈 확인
