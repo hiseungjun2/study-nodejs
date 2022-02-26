@@ -54,7 +54,7 @@ program
   })
 
 // 풀 리퀘스트를 모두 검사해서, 만약 너무 diff 가 큰 (100줄) 풀 리퀘스트가 있으면
-// 'too-bog' 이라는 레이블을 붙인다.
+// 'too-bog' 이라는 레이블을 붙인다
 program
   .command('check-prs')
   .description('Check pull request status')
