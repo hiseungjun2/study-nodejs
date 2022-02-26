@@ -27,8 +27,10 @@
   },
   "dependencies": {
     "body-parser": "^1.19.2",
+    "commander": "^9.0.0",
     "core-js": "^3.21.0",
     "decamelize": "^3.1.0",
+    "dotenv": "^16.0.0",
     "esbuild": "^0.14.21",
     "express": "^4.17.3",
     "image-size": "^1.0.1",
@@ -41,6 +43,7 @@
     "mongodb": "^4.4.0",
     "multer": "^1.4.4",
     "node-fetch": "^2.6.1",
+    "octokit": "^1.7.1",
     "pug": "^3.0.2",
     "sharp": "^0.30.1",
     "tailwindcss": "^3.0.23",

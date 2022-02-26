@@ -1,0 +1,7 @@
+Github의 레포지토리 관리 CLI를 만들어본다
+이슈, 풀 리퀘스트 등의 라벨 관리
+
+npm install commander
+    CLI 관리 라이브러리
+npm install dotenv
+    .env 파일 만들어서 프로젝트 환경변수 사용할 수 있게끔 하는 라이브러리
