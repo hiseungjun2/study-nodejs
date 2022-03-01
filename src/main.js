@@ -12,11 +12,17 @@ const { GITHUB_ACCESS_TOKEN } = process.env
 const fs = require('fs')
 const { program } = require('commander')
 const { Octokit } = require('octokit')
-const { title } = require('process')
+const prompts = require('prompts')
+const chalk = require('chalk')
 
 program.version('0.0.1')
 
 const octokit = new Octokit({ auth: GITHUB_ACCESS_TOKEN })
+
+const OWNER = 'hiseungjun2'
+const REPO = 'studyNodejs'
+
+const LABEL_TOO_BIG = 'too-big'
 
 program
   .command('me')
@@ -33,8 +39,8 @@ program
   .description('List issues with bug label')
   .action(async () => {
     const result = await octokit.rest.issues.listForRepo({
-      owner: 'hiseungjun2',
-      repo: 'studyNodejs',
+      owner: OWNER,
+      repo: REPO,
       labels: 'bug', // label 필터링 가능
     })
 
@@ -59,7 +65,69 @@ program
   .command('check-prs')
   .description('Check pull request status')
   .action(async () => {
-    console.log('Check prs!')
+    const result = await octokit.rest.pulls.list({
+      owner: OWNER,
+      repo: REPO,
+    })
+
+    const prsWithDiff = await Promise.all(
+      result.data.map(async (pr) => ({
+        labels: pr.labels,
+        number: pr.number,
+        compare: await octokit.rest.repos.compareCommits({
+          owner: OWNER,
+          repo: REPO,
+          base: pr.base.ref,
+          head: pr.head.ref,
+        }),
+      }))
+    )
+
+    await Promise.all(
+      prsWithDiff
+        .map(({ compare, ...rest }) => {
+          const totalChanges = compare.data.files?.reduce(
+            (sum, file) => sum + file.changes,
+            0
+          )
+          return {
+            compare,
+            ...rest,
+            totalChanges,
+          }
+        })
+        .filter(
+          (pr) =>
+            pr && typeof pr.totalChanges === 'number' && pr.totalChanges > 100
+        )
+        .map(async ({ labels, number, totalChanges }) => {
+          if (!labels.find((label) => label.name === LABEL_TOO_BIG)) {
+            console.log(
+              chalk.greenBright(
+                `Adding ${LABEL_TOO_BIG} label to PR: ${number}...`
+              )
+            )
+            const response = await prompts({
+              type: 'confirm',
+              name: 'shouldContiune',
+              message: `Do you really want to add label ${LABEL_TOO_BIG} to PR #${number}`,
+            })
+
+            if (response.shouldContiune) {
+              return octokit.rest.issues.addLabels({
+                owner: OWNER,
+                repo: REPO,
+                issue_number: number,
+                labels: [LABEL_TOO_BIG],
+              })
+            }
+            console.log('Cancelled!')
+          }
+          return undefined
+        })
+    )
+
+    console.log(chalk.greenBright('Check prs!'))
   })
 
 program.parseAsync()
