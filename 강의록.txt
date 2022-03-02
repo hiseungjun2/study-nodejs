@@ -203,3 +203,15 @@
             그래프는 node(객체) 와 edge(관계), property(객체의 속성) 으로 이루어짐
             관계가 first-class citizen 이기 떄문에 관계 기반 문제(실시간 추천 등)에 유리
 
+20 npm
+    나만의 패키지 만들기
+    package.json 에 각 프로퍼티 별 정보 입력
+    npm login 
+    npm whoami
+        현재 npm 로그인 되어있는 사용자 조회
+    npm publish --access-public 
+        package 에 npm에 등록할 폴더로 이동 후 (package/fc21-nodejs-pkg)
+        npm 에 최초 업로드
+    npm publish
+        버전업과 같은 수정사항 동기화
+    

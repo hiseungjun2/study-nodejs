@@ -1,0 +1,10 @@
+{
+  "name": "@seungjun/fc21-nodejs-pkg",
+  "version": "0.1.2",
+  "main": "main.js",
+  "keywords": [
+    "util"
+  ],
+  "license": "MIT",
+  "dependencies": {}
+}

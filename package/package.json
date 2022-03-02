@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "dependencies": {
+    "@seungjun/fc21-nodejs-pkg": "^0.1.0"
+  }
+}
