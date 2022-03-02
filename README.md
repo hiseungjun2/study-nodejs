@@ -25,3 +25,8 @@
 ### 3. MongoDB 사용하기
  * https://www.mongodb.com/
  * start free -> Atlas 이용하기 
+
+### 4. .env 생성
+#### 환경변수 모아놓은 파일 생성
+* / 에 생성
+* GITHUB TOKEN 생성 후 파일 저장
