@@ -246,4 +246,36 @@
             npm run seq db:migrate
             npm run seq db:migrate:undo
     
+22 GraphQL
+    페이스북 발표 신규 API 규격
+    type system 기본적으로 갖추고 있어 REST 보다 훨씬 개발과정이 안정적
+    Apollo, Prisma 등 다양한 오픈소스
+    요청 예시 
+    {
+        users {
+            id
+            name
+            city {
+                name
+            }
+        }
+    }
+    query, mutation
+        query : 데이터 요청에 사용, REST 의 GET 과 같음
+        mutation : 변경에 사용, REST 의 POST, DELETE, UPDATE 과 같음
     
+    GraphQL SDL (Schema Definition Language)
+        서버에 질의하기 위한 구조 언어
+        type Book {
+            title : String
+            author : String
+        }
+        type Query {        // Query 는 예약어
+            books(search : String): [Book]
+        }
+    
+    awesome-xxxxxx 붙은 방식으로 github 에 올라와 있는 레포지토리 확인하기
+    
+    npm install apollo-server graphql
+    
+    http localhost:5000/?query="{books{title%2Cauthor}}"
