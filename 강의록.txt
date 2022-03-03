@@ -215,3 +215,35 @@
     npm publish
         버전업과 같은 수정사항 동기화
     
+21 RDB
+    관계형 데이터베이스 (Relational Database)
+    가장 고전적이고 널리 알려진 데이터베이스 모델
+    SQL (Structure Query language) 사용하여 상호작용
+
+    npm install pg
+        postgresql 설치
+    
+    ORM
+        Object relational mapping
+        데이터베이스의 테이블을 객체의 형태로 매핑해 다룬다
+
+        npm install sequelize
+        
+        마이그레이션 진행
+            실제 운영 중인 DB는 즉시 마이그레이션 진행을 하지 못하므로
+            정해진 룰에 따른 CLI 코드를 작성하여 마이그레이션을 진행한다.
+            npm install sequelize-cli
+            npm run seq
+            
+            npm run seq -- migration:generate --name initialize
+                ./build
+                ./config/config.json
+                ./migrations
+                ./models
+                ./seeders
+                폴더 및 파일 생성
+            npm run seq -- migration:generate --name add-cities
+            npm run seq db:migrate
+            npm run seq db:migrate:undo
+    
+    

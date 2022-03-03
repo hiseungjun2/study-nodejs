@@ -1,0 +1,10 @@
+{
+  "development": {
+    "username": "sjkim",
+    "password": "sjkim",
+    "database": "fc21",
+    "host": "hiseungjun2.synology.me",
+    "port": 35212,
+    "dialect": "postgres"
+  }
+}
